@@ -53,7 +53,7 @@ const Header = (props) => {
 }
 
 const mapState = (state) => ({
-    focused: state.focused
+    focused: state.header.focused
 })
 
 const mapDispatch = (dispatch) => ({
