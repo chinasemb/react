@@ -10,8 +10,42 @@ import {
     NavSearch,
     Addition,
     Button,
-    SearchWrapper
+    SearchWrapper,
+    SearchInfo,
+    SearchInfoTitle,
+    SearchInfoSwitch,
+    SearchInfoItem,
+    SearchInfoList
  } from './style'
+
+const getListArea = (show) => {
+    if (show) {
+        return (
+            <SearchInfo>
+                <SearchInfoTitle>
+                    热门搜索
+                    <SearchInfoSwitch>
+                        {/* <i className='iconfont'>&#xe600;</i> */}
+                        换一批
+                    </SearchInfoSwitch>
+                </SearchInfoTitle>
+                <SearchInfoList>
+                    <SearchInfoItem>教育</SearchInfoItem>
+                    <SearchInfoItem>简书</SearchInfoItem>
+                    <SearchInfoItem>简书</SearchInfoItem>
+                    <SearchInfoItem>简书</SearchInfoItem>
+                    <SearchInfoItem>简书</SearchInfoItem>
+                    <SearchInfoItem>简书</SearchInfoItem>
+                    <SearchInfoItem>简书</SearchInfoItem>
+                    <SearchInfoItem>简书</SearchInfoItem>
+                    <SearchInfoItem>简书</SearchInfoItem>
+                </SearchInfoList>
+            </SearchInfo>
+        )
+    }else {
+        return null
+    }
+}
 
 // 无状态组件，性能比较高
 const Header = (props) => {
@@ -40,6 +74,7 @@ const Header = (props) => {
                         </NavSearch>
                     </CSSTransition>
                     <i className= { focused ? 'focused iconfont' : 'iconfont' }>&#xe615;</i>
+                    { getListArea(focused) }
                 </SearchWrapper>
             </Nav>
             <Addition>
