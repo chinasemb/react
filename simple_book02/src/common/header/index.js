@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { connect } from 'react-redux'
 import { CSSTransition } from 'react-transition-group'
 import { 
     HeaderWrapper,
@@ -11,70 +12,66 @@ import {
     SearchWrapper
  } from './style'
 
-class Header extends Component {
-
-    constructor(props) {
-        super(props)
-        this.state = {
-            focused: false
-        }
-        this.handleInputFocus = this.handleInputFocus.bind(this)
-        this.handleInputBlur = this.handleInputBlur.bind(this)
-    }
-
-    render () {
-        return (
-            <HeaderWrapper>
-                <Logo></Logo>
-                <Nav>
-                    <NavItem className='left active'>首页</NavItem>
-                    <NavItem className='left'>下载App</NavItem>
-                    <NavItem className='right'>登录</NavItem>
-                    <NavItem className='right'>
-                        <i className='iconfont'>&#xe636;</i>
-                    </NavItem>
-                    <SearchWrapper>
-                        <CSSTransition
-                            timeout={200}
-                            in={this.state.focused}
-                            classNames='slide'
+// 无状态组件，性能比较高
+const Header = (props) => {
+    const { focused, handleInputFocus, handleInputBlur } = props
+    return (
+        <HeaderWrapper>
+            <Logo></Logo>
+            <Nav>
+                <NavItem className='left active'>首页</NavItem>
+                <NavItem className='left'>下载App</NavItem>
+                <NavItem className='right'>登录</NavItem>
+                <NavItem className='right'>
+                    <i className='iconfont'>&#xe636;</i>
+                </NavItem>
+                <SearchWrapper>
+                    <CSSTransition
+                        timeout={200}
+                        in={focused}
+                        classNames='slide'
+                    >
+                        <NavSearch
+                            className= { focused ? 'focused' : '' }
+                            onFocus= {handleInputFocus}
+                            onBlur= {handleInputBlur}
                         >
-                            <NavSearch
-                                className= { this.state.focused ? 'focused' : '' }
-                                onFocus= {this.handleInputFocus}
-                                onBlur= {this.handleInputBlur}
-                            >
-                            </NavSearch>
-                        </CSSTransition>
-                        <i className= { this.state.focused ? 'focused iconfont' : 'iconfont' }>&#xe615;</i>
-                    </SearchWrapper>
-                </Nav>
-                <Addition>
-                    <Button className='writing'>
-                        <i className='iconfont'>&#xe600;</i>
-                        写文章
-                    </Button>
-                    <Button className='reg'>注册</Button>
-                </Addition>
-            </HeaderWrapper>
-        )
-    }
-
-    handleInputFocus () {
-        this.setState({
-            focused: true
-        })
-    }
-
-    handleInputBlur () {
-        this.setState({
-            focused: false
-        })
-    }
-
+                        </NavSearch>
+                    </CSSTransition>
+                    <i className= { focused ? 'focused iconfont' : 'iconfont' }>&#xe615;</i>
+                </SearchWrapper>
+            </Nav>
+            <Addition>
+                <Button className='writing'>
+                    <i className='iconfont'>&#xe600;</i>
+                    写文章
+                </Button>
+                <Button className='reg'>注册</Button>
+            </Addition>
+        </HeaderWrapper>
+    )
 }
 
-export default Header
+const mapState = (state) => ({
+    focused: state.focused
+})
+
+const mapDispatch = (dispatch) => ({
+    handleInputFocus() {
+        const action = {
+            type: 'search_focus'
+        }
+        dispatch(action)
+    },
+    handleInputBlur() {
+        const action = {
+            type: 'search_blur'
+        }
+        dispatch(action)
+    }
+})
+
+export default connect(mapState, mapDispatch)(Header)
 
 // timeout 动画执行时长
 // in 控制入场出厂动画  {this.state.focused} 布尔值
