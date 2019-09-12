@@ -4,7 +4,7 @@ import logoPic from '../../statics/logo.png'
 export const HeaderWrapper = styled.div `
     position: relative;
     height: 58px;
-    border-bottom: 2px solid #f0f0f0;
+    border-bottom: 3px solid #f0f0f0;
 `
 
 export const Logo = styled.a.attrs({
