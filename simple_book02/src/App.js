@@ -1,5 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { BrowserRouter, Route } from 'react-router-dom';
 import { GlobalStyle } from './style';
 import Header from './common/header/index';
 import { GlobalStyleIconfont } from './statics/iconfont/iconfont';
@@ -13,6 +14,10 @@ function App() {
         <GlobalStyleIconfont />
         <Header>
         </Header>
+        <BrowserRouter>
+          <Route path='/' exact render={()=><div>home</div>}></Route>
+          <Route path='/detail' exact render={()=><div>detail</div>}></Route>
+        </BrowserRouter>
     </Provider>
   );
 }
