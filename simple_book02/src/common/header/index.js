@@ -41,9 +41,9 @@ class Header extends Component {
                     <SearchInfoTitle>
                         热门搜索
                         <SearchInfoSwitch
-                            onClick = { () => { handleChangePage(page, totalPage) } }
+                            onClick = { () => { handleChangePage(page, totalPage, this.spinIcon) } }
                         >
-                            {/* <i className='iconfont'>&#xe600;</i> */}
+                            <i ref={(icon)=> {this.spinIcon = icon}} className='iconfont spin'>&#xed2a;</i>
                             换一批
                         </SearchInfoSwitch>
                     </SearchInfoTitle>
@@ -82,7 +82,7 @@ class Header extends Component {
                             >
                             </NavSearch>
                         </CSSTransition>
-                        <i className= { focused ? 'focused iconfont' : 'iconfont' }>&#xe615;</i>
+                        <i className= { focused ? 'focused iconfont zoom' : 'iconfont zoom' }>&#xe615;</i>
                         { this.getListArea(focused) }
                     </SearchWrapper>
                 </Nav>
@@ -125,7 +125,17 @@ const mapDispatch = (dispatch) => ({
     handleMouseLeave() {
         dispatch(actionCreators.mouseLeave())
     },
-    handleChangePage(page, totalPage) {
+    handleChangePage(page, totalPage, spin) {
+        // 对于非0-9 的数字进行一个替换, 如果这里面的字符不是0-9的数字，那么我把它都替换成空
+        let originAngle = spin.style.transform.replace(/[^0-9]/ig, '')
+        if(originAngle) {
+            // 让它以十进制的形式转换成数字
+            originAngle = parseInt(originAngle, 10)
+        }else {
+            originAngle = 0
+        }
+        spin.style.transform = 'rotate('+ (originAngle+360) + 'deg)'
+        
         if(page < totalPage) {
             dispatch(actionCreators.changePage(page+1))
         }else {

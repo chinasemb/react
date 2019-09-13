@@ -106,6 +106,16 @@ export const SearchInfoTitle = styled.div `
 export const SearchInfoSwitch = styled.span `
     float: right;
     font-size: 13px;
+    .spin {
+        display: block;
+        float: left;
+        font-size: 14px;
+        margin-right: 8px;
+        transition: all .2s ease-in;
+        ${'' /* transform: rotate(0deg);  一开始transform 也不让它有0 deg了 本身什么都没有，就是不旋转的意思 */}
+        ${'' /* 以自己的中心为旋转中心 */}
+        transform-origin: center center;
+    }
 `
 export const SearchInfoItem = styled.a `
     float: left;
@@ -149,7 +159,7 @@ export const Button = styled.div `
 export const SearchWrapper = styled.div `
     position: relative;
     float: left;
-    .iconfont {
+    .zoom {
         position: absolute;
         right: 0px;
         bottom: 5px;
